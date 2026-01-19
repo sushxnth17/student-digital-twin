@@ -1,5 +1,6 @@
 # Student Digital Twin System
 
+The system focuses on explainability rather than complex machine learning models.
 ## Problem Statement
 Traditional academic systems focus on past performance such as marks and attendance.
 They fail to show how daily habits affect future academic and career outcomes.

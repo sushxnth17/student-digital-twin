@@ -33,12 +33,3 @@ def academic_risk_level(attendance, marks):
         return "Medium Risk"
     else:
         return "Low Risk"
-if __name__ == "__main__":
-    result = academic_progress(
-        attendance=70,
-        marks=60,
-        study_hours=2,
-        sleep_hours=5
-    )
-    print("Predicted Marks:", result)
-    print("Risk:", academic_risk_level(70, result))

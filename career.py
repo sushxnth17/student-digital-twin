@@ -35,13 +35,3 @@ def placement_probability(career_score):
         return "Medium"
     else:
         return "Low"
-if __name__ == "__main__":
-    score = calculate_career_score(
-        skill_level=1,
-        internship_effort=2,
-        consistency_score=0.7,
-        final_marks=65
-    )
-
-    print("Career Score:", score)
-    print("Placement Probability:", placement_probability(score))
