@@ -20,4 +20,12 @@ and behavioral data such as attendance, study hours, sleep, and skill developmen
 4. Career analytics estimate readiness and placement probability
 
 ## Current Status
-Core academic and career logic implemented.
+- Core academic and career simulation implemented
+- Backend modularized with clear separation from frontend
+- Personalized study and career recommendations added
+- Frontend development in progress (Streamlit-based UI)
+## Development Notes
+- Backend and frontend are developed on separate branches
+- Backend focuses on simulation and analytics
+- Frontend focuses on visualization and user interaction
+
