@@ -28,4 +28,22 @@ and behavioral data such as attendance, study hours, sleep, and skill developmen
 - Backend and frontend are developed on separate branches
 - Backend focuses on simulation and analytics
 - Frontend focuses on visualization and user interaction
+## Backend Interface
+
+The frontend should call:
+backend.service.run_full_analysis(...)
+
+Inputs:
+- attendance (int)
+- marks (int)
+- study_hours (int)
+- sleep_hours (int)
+- skill_level (int)
+- internship_effort (int)
+
+Returns:
+- current
+- progress
+- scenario_comparison
+- recommendations
 
