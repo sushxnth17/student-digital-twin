@@ -29,7 +29,14 @@ def run_full_analysis(
     scenario_results = compare_scenarios(student, weeks=weeks)
 
     return {
-        "current": base_results,
-        "scenario": scenario_results["comparison"],
-        "recommendations": base_results["recommendations"]
-    }
+    "current": {
+        "final_marks": base_results["final_marks"],
+        "consistency": base_results["consistency"],
+        "career_score": base_results["career_score"],
+        "placement_probability": base_results["placement_probability"],
+    },
+    "progress": base_results["academic_history"],
+    "scenario_comparison": scenario_results["comparison"],
+    "recommendations": base_results["recommendations"],
+}
+
