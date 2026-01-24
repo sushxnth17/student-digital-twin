@@ -12,4 +12,12 @@ marks = st.slider("Current Marks (%)", 0, 100, 60)
 
 # Button
 if st.button("Run Simulation"):
-    st.write("Simulation started...")
+    if attendance >= 75 and marks >= 60:
+        st.success("Predicted Performance: Good")
+    elif attendance >= 60:
+        st.warning("Predicted Performance: Average")
+    else:
+        st.error("Predicted Performance: Needs Improvement")
+
+
+
