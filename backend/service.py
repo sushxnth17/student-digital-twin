@@ -2,6 +2,8 @@ from backend.data import Student
 from backend.app import run_simulation
 from backend.scenario import compare_scenarios
 
+def _clamp(value, min_value, max_value):
+    return max(min_value, min(value, max_value))
 
 def run_full_analysis(
     attendance,
@@ -15,6 +17,21 @@ def run_full_analysis(
     """
     Single entry point for frontend or API.
     """
+    warnings = []
+
+    # Clamp and validate inputs
+    attendance = _clamp(attendance, 0, 100)
+    marks = _clamp(marks, 0, 100)
+    study_hours = _clamp(study_hours, 0, 12)
+    sleep_hours = _clamp(sleep_hours, 0, 12)
+    skill_level = _clamp(skill_level, 0, 10)
+    internship_effort = _clamp(internship_effort, 0, 10)
+
+    if study_hours < 1:
+        warnings.append("Very low study hours may lead to stagnation.")
+
+    if sleep_hours < 5:
+        warnings.append("Low sleep hours can negatively affect consistency.")
 
     student = Student(
         attendance=attendance,
@@ -38,5 +55,6 @@ def run_full_analysis(
     "progress": base_results["academic_history"],
     "scenario_comparison": scenario_results["comparison"],
     "recommendations": base_results["recommendations"],
+    "warnings": warnings,
 }
 
