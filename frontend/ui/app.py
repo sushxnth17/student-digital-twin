@@ -11,6 +11,11 @@ attendance = st.slider("Attendance (%)", 0, 100, 75)
 marks = st.slider("Current Marks (%)", 0, 100, 60)
 
 # Button
+# NOTE:
+# Currently using simple rule-based logic for prediction.
+# Backend integration will be added in the next phase
+# to provide detailed analytics and recommendations.
+
 if st.button("Run Simulation"):
     if attendance >= 75 and marks >= 60:
         st.success("Predicted Performance: Good")
