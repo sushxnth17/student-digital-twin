@@ -1,4 +1,6 @@
+
 from backend.data import Student
+from backend.recommendations import generate_recommendations
 from backend.simulation import simulate_academic_journey
 from backend.career import calculate_career_score, placement_probability
 
@@ -26,13 +28,20 @@ def run_simulation(student, weeks=12):
     )
 
     placement_chance = placement_probability(career_score)
-
+    recommendations = generate_recommendations(
+        student,
+        {
+            "consistency": consistency,
+            "career_score": career_score
+        }
+    )
     return {
         "academic_history": academic_history,
         "final_marks": final_marks,
         "consistency": consistency,
         "career_score": career_score,
-        "placement_probability": placement_chance
+        "placement_probability": placement_chance,
+        "recommendations": recommendations
     }
 
 
@@ -53,3 +62,7 @@ if __name__ == "__main__":
     print("Consistency Score:", results["consistency"])
     print("Career Score:", results["career_score"])
     print("Placement Probability:", results["placement_probability"])
+    
+
+
+    
