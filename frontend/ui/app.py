@@ -43,6 +43,15 @@ if st.button("Run Simulation"):
         internship_effort=internship_effort
     )
 
+    improved_result = run_full_analysis(
+        attendance=attendance,
+        marks=marks,
+        study_hours=min(study_hours + 2, 12),
+        sleep_hours=min(sleep_hours + 1, 10),
+        skill_level=min(skill_level + 2, 10),
+        internship_effort=min(internship_effort + 1, 10)
+    )
+
 
     st.divider()
 
@@ -76,6 +85,35 @@ if st.button("Run Simulation"):
         for r in result["recommendations"]:
             st.success(r)
     
+    
+    #Scenario Comparison
+    st.divider()
+    st.subheader("Scenario Comparison")
+
+    st.write("Current Habits Performance")
+    st.metric(
+        "Career Score (Current)",
+        result["current"]["career_score"]
+    )
+
+    st.metric(
+        "Placement Probability (Current)",
+        result["current"]["placement_probability"]
+    )
+
+    st.divider()
+
+    st.write("Improved Habits Performance")
+    st.metric(
+        "Career Score (Improved)",
+        improved_result["current"]["career_score"]
+    )
+
+    st.metric(
+        "Placement Probability (Improved)",
+        improved_result["current"]["placement_probability"]
+    )
+
 
 
 
