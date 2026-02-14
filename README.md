@@ -68,7 +68,7 @@ Main entry function:
 
 ```python
 from backend.service import run_full_analysis
-
+```
 ###🔹 Frontend (Streamlit)
 
 Interactive interface that:
