@@ -33,6 +33,22 @@ def run_full_analysis(
     if sleep_hours < 5:
         warnings.append("Low sleep hours can negatively affect consistency.")
 
+    if attendance < 75 and attendance >=50:
+        warnings.append("Attendance is moderate.Try to maintain above 75%.")
+
+    if attendance < 50:
+        warnings.append("Attendance is critically low.")
+        
+    if marks < 50:
+        warnings.append("Current marks are low. Academic improvement is needed.")
+
+    if skill_level < 3:
+        warnings.append("Skill development is below optimal level.")
+
+    if internship_effort < 3:
+        warnings.append("Internship effort is low. Practical exposure is important.")
+
+
     student = Student(
         attendance=attendance,
         marks=marks,
