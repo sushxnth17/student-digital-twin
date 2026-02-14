@@ -34,14 +34,15 @@ st.caption(
 
 if st.button("Run Simulation"):
 
-    result = run_full_analysis(
-        attendance=attendance,
-        marks=marks,
-        study_hours=study_hours,
-        sleep_hours=sleep_hours,
-        skill_level=skill_level,
-        internship_effort=internship_effort
-    )
+    results = run_full_analysis(
+    attendance=attendance,
+    marks=marks,
+    study_hours=study_hours,
+    sleep_hours=sleep_hours,
+    skill_level=skill_level,
+    internship_effort=internship_effort
+)
+
 
     improved_result = run_full_analysis(
         attendance=attendance,
@@ -61,58 +62,89 @@ if st.button("Run Simulation"):
         "based on input habits and performance indicators."
     )
 
-    st.metric("Final Marks", result["current"]["final_marks"])
-    st.metric("Career Score", result["current"]["career_score"])
-    st.metric("Placement Probability", result["current"]["placement_probability"])
 
+    st.metric(
+        "Final Marks",
+        results["current"]["final_marks"]
+    )
+
+    st.metric(
+        "Career Score",
+        results["current"]["career_score"]
+    )
+
+    st.metric(
+        "Placement Probability",
+        results["current"]["placement_probability"]
+)
+
+
+   
     # Warnings
-    if result.get("warnings"):
-        st.divider()
-        st.subheader("Warnings")
-        for w in result["warnings"]:
-            st.warning(w)
+    st.divider()
+    st.subheader("Warnings")
+
+    if results["warnings"]:
+        for warn in results["warnings"]:
+            st.warning(warn)
     else:
-        st.divider()
-        st.subheader("Warnings")
         st.success("No critical warnings detected.")
 
 
 
     # Recommendations
-    if result.get("recommendations"):
-        st.divider()
-        st.subheader("Recommendations")
-        for r in result["recommendations"]:
-            st.success(r)
+    st.divider()
+    st.subheader("Recommendations")
+
+    for rec in results["recommendations"]:
+        st.write("•", rec)
+
+
     
     
-    #Scenario Comparison
+    
+    # Scenario Comparison
     st.divider()
     st.subheader("Scenario Comparison")
 
-    st.write("Current Habits Performance")
+    comparison = results["scenario_comparison"]
+
     st.metric(
-        "Career Score (Current)",
-        result["current"]["career_score"]
+        "Marks Change",
+        f"{comparison['final_marks_change']:.2f}"
     )
 
     st.metric(
-        "Placement Probability (Current)",
-        result["current"]["placement_probability"]
+        "Career Score Change",
+        f"{comparison['career_score_change']:.2f}"
     )
 
+    st.metric(
+        "Placement Before",
+        comparison["placement_probability_before"]
+    )
+
+    st.metric(
+        "Placement After",
+        comparison["placement_probability_after"]
+    )
+
+
+
+    #Impact Breakdown
     st.divider()
+    st.subheader("Impact Breakdown")
 
-    st.write("Improved Habits Performance")
-    st.metric(
-        "Career Score (Improved)",
-        improved_result["current"]["career_score"]
-    )
+    impact = results["impact_breakdown"]
 
-    st.metric(
-        "Placement Probability (Improved)",
-        improved_result["current"]["placement_probability"]
-    )
+    for factor, data in impact.items():
+        st.write(f"**{factor.replace('_',' ').title()}**")
+        st.write(f"Before: {data['before']}")
+        st.write(f"After: {data['after']}")
+        st.write(f"Change: {data['change']}")
+        st.write(f"Estimated Impact: {data['estimated_impact']}")
+        st.write(f"Contribution: {data['percentage_contribution']}%")
+        st.divider()
 
 
 
