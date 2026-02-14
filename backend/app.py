@@ -56,13 +56,35 @@ if __name__ == "__main__":
         internship_effort=2
     )
 
-    results = run_simulation(student, weeks=12)
+    from backend.service import run_full_analysis
 
-    print("Final Marks:", results["final_marks"])
-    print("Consistency Score:", results["consistency"])
-    print("Career Score:", results["career_score"])
-    print("Placement Probability:", results["placement_probability"])
-    
+    results = run_full_analysis(
+        attendance=72,
+        marks=60,
+        study_hours=2,
+        sleep_hours=6,
+        skill_level=1,
+        internship_effort=2
+    )
+
+
+    print("Final Marks:", results["current"]["final_marks"])
+    print("Consistency Score:", results["current"]["consistency"])
+    print("Career Score:", results["current"]["career_score"])
+    print("Placement Probability:", results["current"]["placement_probability"])
+
+    print("\nImpact Breakdown:")
+    for factor, details in results["impact_breakdown"].items():
+        print(f"\n{factor.replace('_', ' ').title()}:")
+        print(f"  Before: {details['before']}")
+        print(f"  After : {details['after']}")
+        print(f"  Change: {details['change']}")
+        print(f"  Estimated Impact: {details['estimated_impact']}")
+        print("  Contribution %:", details["percentage_contribution"])
+
+    print("\nPrimary Growth Driver:")
+    print(results["primary_growth_driver"])
+
 
 
     
