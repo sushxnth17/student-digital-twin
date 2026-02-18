@@ -1,6 +1,9 @@
 import sys
 import os
 
+import pandas as pd
+
+
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 )
@@ -144,7 +147,46 @@ if st.button("Run Simulation"):
         st.write(f"Change: {data['change']}")
         st.write(f"Estimated Impact: {data['estimated_impact']}")
         st.write(f"Contribution: {data['percentage_contribution']}%")
-        st.divider()
+        
+    
+    # Primary Growth Driver
+    st.divider()
+    st.subheader("Primary Growth Driver")
+
+    st.success(results["primary_growth_driver"])
+
+
+    
+    # Weekly Progress Chart
+    st.divider()
+    st.subheader("Weekly Progress")
+    progress = results["progress"]
+    df = pd.DataFrame(progress)
+    st.line_chart(df.set_index("week")["marks"])
+
+
+
+    # Contribution Chart
+    st.divider()
+    st.subheader("Factor Contribution Analysis")
+
+    impact = results["impact_breakdown"]
+
+    labels = []
+    values = []
+
+    for factor, data in impact.items():
+        labels.append(factor.replace("_", " ").title())
+        values.append(data["percentage_contribution"])
+
+    chart_df = pd.DataFrame({
+        "Factor": labels,
+        "Contribution (%)": values
+    })
+
+    st.bar_chart(chart_df.set_index("Factor"))
+
+
 
 
 
