@@ -3,6 +3,8 @@ import os
 
 import pandas as pd
 
+import plotly.express as px
+
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -11,11 +13,6 @@ sys.path.append(
 from backend.service import run_full_analysis
 import streamlit as st
 
-# Title and Description
-#st.title("Student Digital Twin")
-#st.write("Frontend interface for the Student Digital Twin system.")
-
-#st.divider()
 
 st.set_page_config(
     page_title="MirrorMind",
@@ -30,6 +27,207 @@ import base64
 def img_to_base64(path):
     with open(path, "rb") as f:
         return base64.b64encode(f.read()).decode()
+
+
+#BackGround Colour
+st.markdown("""
+<style>
+
+.stApp {
+    background: radial-gradient(circle at top,
+    #0f172a,
+    #020617 60%,
+    #010409);
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+
+#Slider Glow
+st.markdown("""
+<style>
+
+/* Hide slider tooltip */
+[data-baseweb="tooltip"]{
+    display:none !important;
+}
+
+/* Slider value number */
+.stSlider [data-baseweb="slider"] span {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* track */
+.stSlider > div > div{
+    background:#1e293b;
+    height:6px;
+    border-radius:10px;
+}
+
+/* filled */
+.stSlider [data-baseweb="slider"] div div{
+    background:#38bdf8;
+}
+
+/* thumb */
+.stSlider [data-baseweb="slider"] div[role="slider"]{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:#38bdf8;
+    box-shadow:0 0 6px rgba(56,189,248,0.35);
+}
+
+/* remove scaling */
+.stSlider [data-baseweb="slider"]:hover div{
+    transform:none;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+#Section Card Style
+st.markdown("""
+<style>
+.section-card{
+background: rgba(255,255,255,0.1);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter: blur(12px);
+border-radius:18px;
+padding:24px;
+margin-top:20px;
+margin-bottom:30px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+#Run Button Style
+st.markdown("""
+<style>
+
+/* Run Simulation Button */
+div.stButton > button {
+    background: linear-gradient(135deg,#1e293b,#334155);
+    color:white;
+    border-radius:12px;
+    padding:10px 20px;
+    border:1px solid rgba(255,255,255,0.1);
+    font-weight:600;
+    transition: all 0.25s ease;
+}
+
+/* Hover effect */
+div.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow:0 8px 25px rgba(56,189,248,0.5);
+    border:1px solid rgba(56,189,248,0.4);
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+#Metric Cards
+st.markdown("""
+<style>
+
+/* Metric Cards */
+[data-testid="stMetric"] {
+    background: rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(6px);
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+#Warning Cards
+st.markdown("""
+<style>
+
+.warning-card{
+    padding:18px;
+    border-radius:14px;
+    background: linear-gradient(90deg, rgba(255,215,0,0.25), rgba(255,215,0,0.5));
+    border:1px solid rgba(255,215,0,0.5);
+    margin-bottom:12px;
+    font-size:15px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+#Recomendations cards
+st.markdown("""
+<style>
+.reco-card{
+    padding:16px;
+    border-radius:14px;
+    background: rgba(56,189,248,0.1);
+    border:1px solid rgba(56,189,248,0.25);
+    margin-bottom:10px;
+    font-size:15px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+#Section Spacing
+st.markdown("""
+<style>
+
+/* Section spacing */
+section.main > div {
+    padding-top: 2rem;
+}
+
+/* Space between blocks */
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* Divider styling */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg,transparent,#1f2a44,transparent);
+    margin: 40px 0;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+#Chart Styling
+st.markdown("""
+<style>
+
+/* Chart container glass effect */
+.stPlotlyChart, canvas {
+    border-radius:18px;
+    background:rgba(255,255,255,0.02);
+    padding:10px;
+}
+
+/* Axis text softer */
+svg text {
+    fill:#9fb0d1 !important;
+    font-size:12px;
+}
+
+/* Grid softer */
+svg line {
+    stroke:#1f2a44 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 
 
 # Logo
@@ -98,43 +296,98 @@ st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
 
 
 # Input Section
-st.divider()
+st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
 left, center, right = st.columns([1.1,1,1])
 
+
 with center:
     st.markdown("## Student Input Parameters")
+    
 
 st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.divider()
+st.markdown("<hr>", unsafe_allow_html=True)
 
+
+
+#Academic Performance
 st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.markdown("### 🎓 Academic Performance")
+
+st.markdown('<div class="section-card">', unsafe_allow_html=True)
+
+
+st.markdown("""
+<h3 style="
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+">
+🎓 <span style="font-weight:700;">Academic Performance</span>
+</h3>
+""", unsafe_allow_html=True)
+
 
 attendance = st.slider("Attendance (%)", 0, 100, 75)
+st.caption(f"Value: {attendance}%")
+st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
 marks = st.slider("Current Marks (%)", 0, 100, 60)
+st.caption(f"Value: {marks}%")
 
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+
+
+# Lifestyle Habits
 st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
+st.markdown('<div class="section-card">', unsafe_allow_html=True)
 
-st.divider()
+st.markdown("""
+<h3 style="
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+">
+🕒 <span style="font-weight:700;">Lifestyle Habits</span>
+</h3>
+""", unsafe_allow_html=True)
 
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.markdown("### 🕒 Lifestyle Habits")
 
 study_hours = st.slider("Daily Study Hours", 0, 12, 2)
+st.caption(f"Value: {study_hours} hours")
+st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
 sleep_hours = st.slider("Daily Sleep Hours", 0, 12, 6)
+st.caption(f"Value: {sleep_hours} hours")
 
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+
+
+# Career Development
 st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.divider()
+st.markdown('<div class="section-card">', unsafe_allow_html=True)
 
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
+st.markdown("""
+<h3 style="
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+">
+🚀 <span style="font-weight:700;">Career Development</span>
+</h3>
+""", unsafe_allow_html=True)
 
-st.markdown("### 🚀 Career Development")
 skill_level = st.slider("Skill Level (0–10)", 0, 10, 3)
+st.caption(f"Value: {skill_level}/10")
+st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
 internship_effort = st.slider("Internship Effort (0–10)", 0, 10, 2)
+st.caption(f"Value: {internship_effort}/10")
 
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.divider()
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+
 
 st.caption(
     "Adjust the sliders to simulate different academic and lifestyle scenarios."
@@ -165,8 +418,7 @@ if st.button("Run Simulation"):
     )
 
 
-    st.divider()
-
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Current Performance")
     st.caption(
         "These results represent the student's current academic and career standing "
@@ -174,48 +426,51 @@ if st.button("Run Simulation"):
     )
 
 
-    st.metric(
-        "Final Marks",
-        results["current"]["final_marks"]
-    )
+    col1, col2, col3 = st.columns(3)
 
-    st.metric(
-        "Career Score",
-        results["current"]["career_score"]
-    )
+    with col1:
+        st.metric(
+            "Final Marks",
+            results["current"]["final_marks"]
+        )
 
-    st.metric(
-        "Placement Probability",
-        results["current"]["placement_probability"]
-)
+    with col2:
+        st.metric(
+            "Career Score",
+            results["current"]["career_score"]
+        )
+
+    with col3:
+        st.metric(
+            "Placement Probability",
+             results['current']['placement_probability']
+    )
 
 
    
     # Warnings
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Warnings")
 
     if results["warnings"]:
         for warn in results["warnings"]:
-            st.warning(warn)
+            st.markdown(f'<div class="warning-card">{warn}</div>', unsafe_allow_html=True)
     else:
         st.success("No critical warnings detected.")
 
 
 
     # Recommendations
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Recommendations")
 
     for rec in results["recommendations"]:
-        st.write("•", rec)
+        st.markdown(f'<div class="reco-card">💡 {rec}</div>', unsafe_allow_html=True)
 
 
-    
-    
     
     # Scenario Comparison
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Scenario Comparison")
 
     comparison = results["scenario_comparison"]
@@ -243,7 +498,7 @@ if st.button("Run Simulation"):
 
 
     #Impact Breakdown
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Impact Breakdown")
 
     impact = results["impact_breakdown"]
@@ -258,24 +513,40 @@ if st.button("Run Simulation"):
         
     
     # Primary Growth Driver
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Primary Growth Driver")
-
     st.success(results["primary_growth_driver"])
 
 
     
     # Weekly Progress Chart
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Weekly Progress")
     progress = results["progress"]
     df = pd.DataFrame(progress)
-    st.line_chart(df.set_index("week")["marks"])
+
+    fig = px.line(
+        df,
+        x="week",
+        y="marks",
+        markers=True
+    )
+
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#e6edf7"),
+        margin=dict(l=20,r=20,t=20,b=20)
+    )
+
+    fig.update_traces(line=dict(width=3))
+    st.plotly_chart(fig, use_container_width=True)
 
 
 
     # Contribution Chart
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Factor Contribution Analysis")
 
     impact = results["impact_breakdown"]
@@ -292,7 +563,27 @@ if st.button("Run Simulation"):
         "Contribution (%)": values
     })
 
-    st.bar_chart(chart_df.set_index("Factor"))
+    fig2 = px.bar(
+        chart_df,
+        x="Factor",
+        y="Contribution (%)",
+        text="Contribution (%)"
+    )
+
+    fig2.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#e6edf7"),
+        margin=dict(l=20, r=20, t=20, b=20)
+    )
+
+    fig2.update_traces(
+        marker_line_width=0,
+        textposition="outside"
+    )
+
+    st.plotly_chart(fig2, use_container_width=True)
 
 
 
