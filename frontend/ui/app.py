@@ -29,6 +29,11 @@ def img_to_base64(path):
         return base64.b64encode(f.read()).decode()
 
 
+#State Flag
+if "started" not in st.session_state:
+    st.session_state.started = False
+
+  
 #BackGround Colour
 st.markdown("""
 <style>
@@ -230,83 +235,110 @@ svg line {
 
 
 
-# Logo
-col1, col2, col3 = st.columns([1,1.5,1])
 
-with col2:
+#Welcome Screen Layout
+if not st.session_state.started:
+
+    # Logo
+    col1, col2, col3 = st.columns([1,1.5,1])
+
+    with col2:
+        st.markdown("""
+            <div style="display:flex; justify-content:center;">
+                <img src="data:image/png;base64,{img}" 
+                style="
+                    width:160px;
+                    height:160px;
+                    border-radius:50%;
+                    object-fit:cover;
+                    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+                ">
+            </div>
+        """.format(img=img_to_base64("frontend/ui/assets/logo.png")),
+        unsafe_allow_html=True)
+
+
+
+
+    #Hero Section
+
     st.markdown("""
-        <div style="display:flex; justify-content:center;">
-            <img src="data:image/png;base64,{img}" 
-            style="
-                width:160px;
-                height:160px;
-                border-radius:50%;
-                object-fit:cover;
-                box-shadow:0 10px 30px rgba(0,0,0,0.5);
-            ">
-        </div>
-    """.format(img=img_to_base64("frontend/ui/assets/logo.png")),
-    unsafe_allow_html=True)
+    <style>
+    .hero-wrapper{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+        margin-top:20px;
+    }
 
+    .hero-card{
+        text-align:center;
+        padding:34px;
+        width:520px;
+        border-radius:24px;
+        background:linear-gradient(180deg,#0f172a,#020617);
+        box-shadow:0 30px 80px rgba(0,0,0,0.7);
+    }
+    .hero-title{
+        margin:0;
+        font-size:46px;
+        font-weight:800;
+    }
+    .hero-sub{
+        color:#9ca3af;
+        font-size:16px;
+        margin-top:6px;
+    }
+    </style>
 
+    <div class="hero-wrapper">
+    <div class="hero-card">
+    <h1 class="hero-title">MirrorMind</h1>
+    <p class="hero-sub">Student Digital Twin System</p>
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
+    
 
-#Hero Section
+    #Lets Begin Button
+    st.markdown("""
+    <div style="
+        text-align:center;
+        padding:60px 20px;
+        max-width:750px;
+        margin:auto;
+        background:rgba(255,255,255,0.03);
+        border:1px solid rgba(255,255,255,0.08);
+        border-radius:20px;
+        backdrop-filter:blur(10px);
+    ">
+        <h1 style="margin-bottom:10px;">Student Digital Twin</h1>
+        <p style="opacity:0.8;font-size:16px;">
+        Simulate academic growth, identify key drivers, and predict placement readiness
+        using an explainable digital twin model.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-.hero-wrapper{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    width:100%;
-    margin-top:20px;
-}
+    st.markdown("<br>", unsafe_allow_html=True)
 
-.hero-card{
-    text-align:center;
-    padding:34px;
-    width:520px;
-    border-radius:24px;
-    background:linear-gradient(180deg,#0f172a,#020617);
-    box-shadow:0 30px 80px rgba(0,0,0,0.7);
-}
-.hero-title{
-    margin:0;
-    font-size:46px;
-    font-weight:800;
-}
-.hero-sub{
-    color:#9ca3af;
-    font-size:16px;
-    margin-top:6px;
-}
-</style>
+    col1, col2, col3 = st.columns([1,1,1])
 
-<div class="hero-wrapper">
-<div class="hero-card">
-<h1 class="hero-title">MirrorMind</h1>
-<p class="hero-sub">Student Digital Twin System</p>
-</div>
-</div>
-""", unsafe_allow_html=True)
+    with col2:
+        if st.button("🚀 Let's Begin", use_container_width=True):
+            st.session_state.started = True
+            st.rerun()
 
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-
+    st.stop()
 
 
 # Input Section
-st.markdown("<hr>", unsafe_allow_html=True)
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
 left, center, right = st.columns([1.1,1,1])
-
 
 with center:
     st.markdown("## Student Input Parameters")
-    
-
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.markdown("<hr>", unsafe_allow_html=True)
 
 
 
