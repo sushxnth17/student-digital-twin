@@ -5,6 +5,7 @@ import pandas as pd
 
 import plotly.express as px
 
+import time
 
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
