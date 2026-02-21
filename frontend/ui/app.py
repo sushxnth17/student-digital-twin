@@ -33,6 +33,10 @@ def img_to_base64(path):
 if "started" not in st.session_state:
     st.session_state.started = False
 
+#PAge State
+if "page" not in st.session_state:
+    st.session_state.page = "input"
+
   
 #BackGround Colour
 st.markdown("""
@@ -334,123 +338,151 @@ if not st.session_state.started:
     st.stop()
 
 
-# Input Section
-left, center, right = st.columns([1.1,1,1])
-
-with center:
-    st.markdown("## Student Input Parameters")
 
 
 
-#Academic Performance
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
+if st.session_state.page == "input":
 
-st.markdown('<div class="section-card">', unsafe_allow_html=True)
+    # Input Section
+    left, center, right = st.columns([1.1,1,1])
 
+    with center:
+        st.markdown("## 🧠 Simulation Setup")
+        st.caption("Adjust variables to model your academic twin.")
+    
+    
+    #Academic Performance
+    st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
 
-st.markdown("""
-<h3 style="
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:10px;
-">
-🎓 <span style="font-weight:700;">Academic Performance</span>
-</h3>
-""", unsafe_allow_html=True)
+    st.markdown('<div class="section-card">', unsafe_allow_html=True)
 
 
-attendance = st.slider("Attendance (%)", 0, 100, 75)
-st.caption(f"Value: {attendance}%")
-st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
-marks = st.slider("Current Marks (%)", 0, 100, 60)
-st.caption(f"Value: {marks}%")
-
-st.markdown('</div>', unsafe_allow_html=True)
-st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
-
-
-# Lifestyle Habits
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-card">', unsafe_allow_html=True)
-
-st.markdown("""
-<h3 style="
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:10px;
-">
-🕒 <span style="font-weight:700;">Lifestyle Habits</span>
-</h3>
-""", unsafe_allow_html=True)
+    st.markdown("""
+    <h3 style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+    ">
+    🎓 <span style="font-weight:700;">Academic Performance</span>
+    </h3>
+    """, unsafe_allow_html=True)
 
 
-study_hours = st.slider("Daily Study Hours", 0, 12, 2)
-st.caption(f"Value: {study_hours} hours")
-st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
-sleep_hours = st.slider("Daily Sleep Hours", 0, 12, 6)
-st.caption(f"Value: {sleep_hours} hours")
+    attendance = st.slider("Attendance (%)", 0, 100, 75)
+    st.caption(f"Value: {attendance}%")
+    st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
+    marks = st.slider("Current Marks (%)", 0, 100, 60)
+    st.caption(f"Value: {marks}%")
 
-st.markdown('</div>', unsafe_allow_html=True)
-st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
-
-
-# Career Development
-st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-card">', unsafe_allow_html=True)
-
-st.markdown("""
-<h3 style="
-display:flex;
-align-items:center;
-gap:10px;
-margin-bottom:10px;
-">
-🚀 <span style="font-weight:700;">Career Development</span>
-</h3>
-""", unsafe_allow_html=True)
-
-skill_level = st.slider("Skill Level (0–10)", 0, 10, 3)
-st.caption(f"Value: {skill_level}/10")
-st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
-internship_effort = st.slider("Internship Effort (0–10)", 0, 10, 2)
-st.caption(f"Value: {internship_effort}/10")
-
-st.markdown('</div>', unsafe_allow_html=True)
-st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
 
-st.caption(
-    "Adjust the sliders to simulate different academic and lifestyle scenarios."
-)
+    # Lifestyle Habits
+    st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
+    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+
+    st.markdown("""
+    <h3 style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+    ">
+    🕒 <span style="font-weight:700;">Lifestyle Habits</span>
+    </h3>
+    """, unsafe_allow_html=True)
 
 
-# Run Simulation Button
+    study_hours = st.slider("Daily Study Hours", 0, 12, 2)
+    st.caption(f"Value: {study_hours} hours")
+    st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
+    sleep_hours = st.slider("Daily Sleep Hours", 0, 12, 6)
+    st.caption(f"Value: {sleep_hours} hours")
 
-if st.button("Run Simulation"):
-
-    results = run_full_analysis(
-    attendance=attendance,
-    marks=marks,
-    study_hours=study_hours,
-    sleep_hours=sleep_hours,
-    skill_level=skill_level,
-    internship_effort=internship_effort
-)
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
 
-    improved_result = run_full_analysis(
-        attendance=attendance,
-        marks=marks,
-        study_hours=min(study_hours + 2, 12),
-        sleep_hours=min(sleep_hours + 1, 10),
-        skill_level=min(skill_level + 2, 10),
-        internship_effort=min(internship_effort + 1, 10)
+    # Career Development
+    st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
+    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+
+    st.markdown("""
+    <h3 style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+    ">
+    🚀 <span style="font-weight:700;">Career Development</span>
+    </h3>
+    """, unsafe_allow_html=True)
+
+    skill_level = st.slider("Skill Level (0–10)", 0, 10, 3)
+    st.caption(f"Value: {skill_level}/10")
+    st.markdown("<div style='height:15px'></div>", unsafe_allow_html=True)
+    internship_effort = st.slider("Internship Effort (0–10)", 0, 10, 2)
+    st.caption(f"Value: {internship_effort}/10")
+
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+
+
+    st.caption(
+        "Adjust the sliders to simulate different academic and lifestyle scenarios."
     )
 
+    # Run Simulation Button
+    if st.button("Run Simulation"):
 
-    st.markdown("<hr>", unsafe_allow_html=True)
+        st.session_state.inputs = {
+            "attendance": attendance,
+            "marks": marks,
+            "study_hours": study_hours,
+            "sleep_hours": sleep_hours,
+            "skill_level": skill_level,
+            "internship_effort": internship_effort
+        }
+
+        st.session_state.results = run_full_analysis(**st.session_state.inputs)
+
+        st.session_state.page = "results"
+        st.rerun()
+
+
+    
+
+if st.session_state.page == "results":
+
+    left, center, right = st.columns([1.1,1,1])
+
+    with center:
+        st.markdown("## 📊 Simulation Results")
+        st.caption("Your digital twin analysis and growth insights.")
+
+    colA, colB = st.columns([8,2])
+
+    with colB:
+        if st.button("✏️ Edit Inputs"):
+            st.session_state.page = "input"
+            st.rerun()
+
+    inputs = st.session_state.inputs
+    results = st.session_state.results
+
+    improved_result = run_full_analysis(
+    attendance=inputs["attendance"],
+    marks=inputs["marks"],
+    study_hours=min(inputs["study_hours"] + 2, 12),
+    sleep_hours=min(inputs["sleep_hours"] + 1, 10),
+    skill_level=min(inputs["skill_level"] + 2, 10),
+    internship_effort=min(inputs["internship_effort"] + 1, 10)
+)
+
+
+        
     st.subheader("Current Performance")
     st.caption(
         "These results represent the student's current academic and career standing "
@@ -475,7 +507,7 @@ if st.button("Run Simulation"):
     with col3:
         st.metric(
             "Placement Probability",
-             results['current']['placement_probability']
+            results['current']['placement_probability']
     )
 
 
@@ -528,8 +560,7 @@ if st.button("Run Simulation"):
     )
 
 
-
-    #Impact Breakdown
+    # Impact Breakdown
     st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader("Impact Breakdown")
 
@@ -570,11 +601,10 @@ if st.button("Run Simulation"):
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#e6edf7"),
         margin=dict(l=20,r=20,t=20,b=20)
-    )
+ )
 
     fig.update_traces(line=dict(width=3))
     st.plotly_chart(fig, use_container_width=True)
-
 
 
     # Contribution Chart
