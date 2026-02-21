@@ -28,6 +28,156 @@ def img_to_base64(path):
     with open(path, "rb") as f:
         return base64.b64encode(f.read()).decode()
 
+#Section Box
+def section_box(title, subtitle=None):
+    st.markdown(f"""
+    <div style="
+        padding:26px;
+        border-radius:26px;
+        background:rgba(255,255,255,0.04);
+        backdrop-filter: blur(14px);
+        border:1px solid rgba(255,255,255,0.08);
+        margin-bottom:22px;
+    ">
+        <div style="font-size:22px;font-weight:700;">{title}</div>
+        <div style="opacity:0.7;margin-top:4px;">{subtitle if subtitle else ""}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+#Section_Divider
+st.markdown("""
+<style>
+
+.section-divider{
+    height:1px;
+    margin:40px 0;
+    background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0.15),
+        rgba(255,255,255,0)
+    );
+}
+
+.section-title{
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:.3px;
+    margin-bottom:8px;
+}
+
+.section-sub{
+    opacity:.6;
+    margin-bottom:16px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+#Impact CArd
+def impact_card(title, before, after, change, impact, percent):
+
+    st.markdown(f"""
+    <div class="impact-card">
+        <h4>{title}</h4>
+        <p>Before: {before} → After: {after}</p>
+        <p>Impact: {impact}</p>
+        <div class="progress">
+            <div class="progress-bar" style="width:{percent}%"></div>
+        </div>
+        <small>Contribution: {percent:.1f}%</small>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+.impact-card{
+background:rgba(255,255,255,0.03);
+padding:20px;
+border-radius:18px;
+margin-bottom:18px;
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.progress{
+background:rgba(255,255,255,0.05);
+height:8px;
+border-radius:8px;
+overflow:hidden;
+margin-top:8px;
+}
+
+.progress-bar{
+background:linear-gradient(90deg,#22c55e,#38bdf8);
+height:100%;
+}
+</style>
+""", unsafe_allow_html=True)
+
+#Glass-Card
+st.markdown("""
+<style>
+
+.glass-card{
+background: rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter: blur(14px);
+border-radius:22px;
+padding:24px;
+margin-bottom:22px;
+}
+
+.big-highlight{
+font-size:18px;
+font-weight:600;
+padding:18px;
+border-radius:16px;
+background:linear-gradient(90deg, rgba(34,197,94,0.25), rgba(34,197,94,0.45));
+border:1px solid rgba(34,197,94,0.5);
+}
+
+.impact-item{
+padding:14px;
+border-radius:14px;
+background:rgba(59,130,246,0.12);
+margin-bottom:10px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+#Recommendation_Box
+def recommendation_card(message):
+
+    msg = message.lower()
+
+    # detect severity
+    if any(word in msg for word in ["urgent","critical","low","poor","improve immediately"]):
+        glow = "0 0 30px rgba(239,68,68,0.35)"   # red
+
+    elif any(word in msg for word in ["increase","focus","practice","consider"]):
+        glow = "0 0 30px rgba(251,191,36,0.35)"  # yellow
+
+    else:
+        glow = "0 0 30px rgba(59,130,246,0.35)"  # blue
+
+    st.markdown(f"""
+    <div style="
+        padding:18px;
+        margin-bottom:14px;
+        border-radius:18px;
+        background:rgba(255,255,255,0.03);
+        backdrop-filter: blur(12px);
+        box-shadow:{glow};
+    ">
+        💡 {message}
+    </div>
+    """, unsafe_allow_html=True
+    )
 
 #State Flag
 if "started" not in st.session_state:
@@ -52,6 +202,21 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+#REmove Margins
+def recommendation_card(message):
+
+    st.markdown(f"""
+    <div style="
+        padding:18px;
+        margin-bottom:14px;
+        border-radius:18px;
+        background:rgba(255,255,255,0.03);
+        backdrop-filter: blur(12px);
+        box-shadow:0 0 25px rgba(59,130,246,0.25);
+    ">
+        💡 {message}
+    </div>
+    """, unsafe_allow_html=True)
 
 
 #Slider Glow
@@ -446,21 +611,46 @@ if st.session_state.page == "input":
             "internship_effort": internship_effort
         }
 
+        #Spinner
+        with st.spinner("Simulating your digital twin..."):
+            time.sleep(2.5)
+
         st.session_state.results = run_full_analysis(**st.session_state.inputs)
 
         st.session_state.page = "results"
         st.rerun()
+
+    
 
 
     
 
 if st.session_state.page == "results":
 
-    left, center, right = st.columns([1.1,1,1])
 
-    with center:
-        st.markdown("## 📊 Simulation Results")
-        st.caption("Your digital twin analysis and growth insights.")
+    st.markdown("""
+        <div style="
+        width:100%;
+        margin-left:-20px;
+        margin-right:-20px;
+        padding:40px 80px;
+        border-radius:26px;
+        background:linear-gradient(135deg, rgba(56,189,248,0.15), rgba(99,102,241,0.15));
+        border:1px solid rgba(56,189,248,0.35);
+        margin-bottom:35px;
+        backdrop-filter: blur(16px);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        ">
+        <div>
+        <h1 style="margin:0;font-size:38px;">📊 Simulation Results</h1>
+        <p style="opacity:0.85;margin-top:6px;font-size:17px;">
+        Your digital twin analysis and growth insights.
+        </p>
+        </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     colA, colB = st.columns([8,2])
 
@@ -483,108 +673,231 @@ if st.session_state.page == "results":
 
 
         
-    st.subheader("Current Performance")
-    st.caption(
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+
+    
+    #Ai Summary
+    placement = results["current"]["placement_probability"]
+    career = results["current"]["career_score"]
+    marks = results["current"]["final_marks"]
+
+    if placement == "High" and career > 75:
+        summary = (
+            "Strong placement readiness detected. Maintain consistency and focus on real-world project exposure to secure top opportunities."
+        )
+
+    elif placement == "Medium" and career >= 65:
+        summary = (
+            "Your profile shows good potential but lacks consistency. Increasing study discipline and practical experience will significantly boost outcomes."
+        )
+
+    elif marks < 60:
+        summary = (
+            "Academic performance is limiting growth. Prioritize core subjects and structured study routines to stabilize your trajectory."
+        )
+
+    else:
+        summary = (
+            "Your digital twin indicates moderate progress. Small improvements in skills, internships, and study habits can create noticeable gains."
+        )
+    
+
+    #Current Performance
+    section_box("Current Performance",
         "These results represent the student's current academic and career standing "
         "based on input habits and performance indicators."
     )
-
-
+    
+    
+    #Key Metrics
     col1, col2, col3 = st.columns(3)
 
+    final_marks = results["current"]["final_marks"]
+    career_score = results["current"]["career_score"]
+    placement_status = results["current"]["placement_probability"]
+
+    def glow_marks(v):
+        if v >= 75: return "rgba(34,197,94,0.55)"
+        if v >= 50: return "rgba(251,191,36,0.55)"
+        return "rgba(239,68,68,0.55)"
+
+    def glow_career(v):
+        if v >= 80: return "rgba(34,197,94,0.55)"
+        if v >= 60: return "rgba(251,191,36,0.55)"
+        return "rgba(239,68,68,0.55)"
+
+    def glow_place(v):
+        if v == "High": return "rgba(34,197,94,0.55)"
+        if v == "Medium": return "rgba(251,191,36,0.55)"
+        return "rgba(239,68,68,0.55)"
+
+    def metric_card(title, value, glow):
+        st.markdown(f"""
+        <div style="
+            padding:22px;
+            border-radius:24px;
+            background:rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            box-shadow:0 0 35px {glow};
+            transition:0.3s;
+        ">
+            <div style="font-size:14px;opacity:0.7;">{title}</div>
+            <div style="font-size:34px;font-weight:700;margin-top:6px;">{value}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
     with col1:
-        st.metric(
-            "Final Marks",
-            results["current"]["final_marks"]
-        )
+        metric_card("Final Marks", final_marks, glow_marks(final_marks))
 
     with col2:
-        st.metric(
-            "Career Score",
-            results["current"]["career_score"]
-        )
+        metric_card("Career Score", career_score, glow_career(career_score))
 
     with col3:
-        st.metric(
-            "Placement Probability",
-            results['current']['placement_probability']
-    )
+        metric_card("Placement Probability", placement_status, glow_place(placement_status))
+
+    
+    #Ai Insight
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="
+        padding:26px;
+        border-radius:24px;
+        background:linear-gradient(135deg, rgba(99,102,241,0.18), rgba(59,130,246,0.18));
+        backdrop-filter: blur(14px);
+        margin-bottom:30px;
+        box-shadow:0 0 40px rgba(99,102,241,0.25);
+    ">
+    <h3>🧠 AI Insight</h3>
+    <p>{summary}</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
    
     # Warnings
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.subheader("Warnings")
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    section_box("Warnings")
 
     if results["warnings"]:
         for warn in results["warnings"]:
             st.markdown(f'<div class="warning-card">{warn}</div>', unsafe_allow_html=True)
     else:
-        st.success("No critical warnings detected.")
+        st.markdown("""
+            <div style="
+            padding:18px;
+            border-radius:18px;
+            background:rgba(0,255,180,0.08);
+            border:1px solid rgba(0,255,180,0.25);
+            text-align:center;
+            font-size:16px;">
+            ✅ Everything looks good. Your digital twin sees no risks right now.
+            </div>
+        """, unsafe_allow_html=True)
 
 
 
     # Recommendations
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.subheader("Recommendations")
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    section_box("Recommendations")
 
     for rec in results["recommendations"]:
-        st.markdown(f'<div class="reco-card">💡 {rec}</div>', unsafe_allow_html=True)
+        recommendation_card(rec)
 
 
     
     # Scenario Comparison
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.subheader("Scenario Comparison")
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    section_box("Scenario Comparison")
 
     comparison = results["scenario_comparison"]
 
-    st.metric(
-        "Marks Change",
-        f"{comparison['final_marks_change']:.2f}"
-    )
+    col1, col2 = st.columns(2)
 
-    st.metric(
-        "Career Score Change",
-        f"{comparison['career_score_change']:.2f}"
-    )
+    with col1:
+        st.metric(
+            "Marks Change",
+            f"{comparison['final_marks_change']:.2f}"
+        )
 
-    st.metric(
-        "Placement Before",
-        comparison["placement_probability_before"]
-    )
+        st.metric(
+            "Placement Before",
+            comparison["placement_probability_before"]
+        )
 
-    st.metric(
-        "Placement After",
-        comparison["placement_probability_after"]
-    )
+    with col2:
+        st.metric(
+            "Career Score Change",
+            f"{comparison['career_score_change']:.2f}"
+        )
 
+        st.metric(
+            "Placement After",
+            comparison["placement_probability_after"]
+        )
 
     # Impact Breakdown
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.subheader("Impact Breakdown")
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    section_box("Impact Breakdown")
 
     impact = results["impact_breakdown"]
 
+    cols = st.columns(2)
+
+    i = 0
     for factor, data in impact.items():
-        st.write(f"**{factor.replace('_',' ').title()}**")
-        st.write(f"Before: {data['before']}")
-        st.write(f"After: {data['after']}")
-        st.write(f"Change: {data['change']}")
-        st.write(f"Estimated Impact: {data['estimated_impact']}")
-        st.write(f"Contribution: {data['percentage_contribution']}%")
+
+        with cols[i % 2]:
+
+            percent = data["percentage_contribution"]
+
+            st.markdown(f"""
+            <div class="impact-card">
+
+            <h4>{factor.replace('_',' ').title()}</h4>
+
+            <p>
+            Before: {data['before']} → After: {data['after']}
+            </p>
+
+            <p>
+            Estimated Impact: {data['estimated_impact']}
+            </p>
+
+            <div class="progress">
+                <div class="progress-bar" style="width:{percent}%"></div>
+            </div>
+
+            <small>Contribution: {percent:.1f}%</small>
+
+            </div>
+            """, unsafe_allow_html=True)
+
+        i += 1
         
     
     # Primary Growth Driver
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.subheader("Primary Growth Driver")
-    st.success(results["primary_growth_driver"])
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    section_box("Primary Growth Driver")
+    driver = results["primary_growth_driver"]
+
+    st.markdown(f"""
+    <div style="
+    padding:22px;
+    border-radius:22px;
+    background:linear-gradient(135deg, rgba(34,197,94,0.25), rgba(34,197,94,0.05));
+    border:1px solid rgba(34,197,94,0.4);
+    font-size:18px;
+    font-weight:600;
+    ">
+    🚀 {driver}
+    </div>
+    """, unsafe_allow_html=True)
 
 
     
     # Weekly Progress Chart
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.subheader("Weekly Progress")
+    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
+    section_box("Weekly Progress")
     progress = results["progress"]
     df = pd.DataFrame(progress)
 
@@ -592,7 +905,8 @@ if st.session_state.page == "results":
         df,
         x="week",
         y="marks",
-        markers=True
+        markers=True,
+        line_shape="spline",
     )
 
     fig.update_layout(
@@ -600,16 +914,32 @@ if st.session_state.page == "results":
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#e6edf7"),
-        margin=dict(l=20,r=20,t=20,b=20)
+        margin=dict(l=20,r=20,t=20,b=20),
+        hovermode="x unified",
+        xaxis_title="Week"
  )
 
-    fig.update_traces(line=dict(width=3))
-    st.plotly_chart(fig, use_container_width=True)
+    fig.update_traces(
+            line=dict(width=4, color="#38bdf8"), 
+            marker=dict(size=8, color="#22c55e"))   
+    st.markdown("""
+        <div style="
+        padding:20px;
+        border-radius:22px;
+        background:rgba(255,255,255,0.03);
+        border:1px solid rgba(255,255,255,0.08);
+        backdrop-filter:blur(10px);
+        ">
+        """, unsafe_allow_html=True)
+
+    st.plotly_chart(fig, width="stretch")
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
     # Contribution Chart
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.subheader("Factor Contribution Analysis")
+    
+    section_box("Factor Contribution Analysis")
 
     impact = results["impact_breakdown"]
 
@@ -625,11 +955,15 @@ if st.session_state.page == "results":
         "Contribution (%)": values
     })
 
+    chart_df = chart_df.sort_values("Contribution (%)", ascending=False)
+
     fig2 = px.bar(
         chart_df,
         x="Factor",
         y="Contribution (%)",
-        text="Contribution (%)"
+        text="Contribution (%)",
+        color="Contribution (%)",
+        color_continuous_scale="Tealgrn"
     )
 
     fig2.update_layout(
@@ -637,15 +971,32 @@ if st.session_state.page == "results":
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#e6edf7"),
-        margin=dict(l=20, r=20, t=20, b=20)
+        margin=dict(l=10, r=10, t=20, b=10),
+        coloraxis_showscale=False
     )
 
     fig2.update_traces(
         marker_line_width=0,
-        textposition="outside"
+        textposition="outside",
+        marker= dict(
+            color=values,
+            colorscale="Tealgrn",
+            )
     )
 
-    st.plotly_chart(fig2, use_container_width=True)
+    st.markdown("""
+        <div style="
+        padding:20px;
+        border-radius:22px;
+        background:rgba(255,255,255,0.03);
+        border:1px solid rgba(255,255,255,0.08);
+        backdrop-filter:blur(10px);
+        ">
+        """, unsafe_allow_html=True)
+
+    st.plotly_chart(fig2, width="stretch")
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 
