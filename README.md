@@ -1,4 +1,4 @@
-# 📘 Student Digital Twin System
+# 📘 MirrorMind - Student Digital Twin System
 
 A simulation-based academic and career analytics system that models how daily student habits influence long-term academic performance and placement readiness.
 
