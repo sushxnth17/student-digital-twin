@@ -1,150 +1,149 @@
-# 📘🧠 MirrorMind - Student Digital Twin System
+# 📘🧠 MirrorMind — Student Digital Twin
 
-A simulation-based academic and career analytics system that models how daily student habits influence long-term academic performance and placement readiness.
+A compact, explainable simulation that models how a student's daily habits shape long-term academic performance and placement readiness.
 
-This project focuses on **explainable logic-based modeling** instead of black-box machine learning.
+This project emphasizes transparent, rule-based reasoning rather than black-box ML — ideal for educators and learners who want actionable, interpretable insights.
 
 ---
 
-## 🚀 Project Overview
+## 🚀 At a Glance
 
-The Student Digital Twin models a student using behavioral and academic inputs such as:
+MirrorMind models a student using a small set of behavioral and academic inputs:
 
 - Attendance
-- Current Marks
-- Daily Study Hours
-- Sleep Hours
-- Skill Level
-- Internship Effort
+- Current marks
+- Daily study hours
+- Sleep hours
+- Skill level
+- Internship effort
 
-It simulates academic progress over time and generates:
+From these, it produces:
 
-- 📊 Final Marks Prediction  
-- 🎯 Career Readiness Score  
-- 💼 Placement Probability  
-- 🔄 Scenario Comparison (Current vs Improved Habits)  
-- 🧠 Explainable Impact Breakdown  
-- 📈 Primary Growth Driver Analysis  
-- 💡 Personalized Recommendations  
-- ⚠️ Input Validation Warnings  
+- 📊 Final marks prediction
+- 🎯 Career readiness score
+- 💼 Placement probability
+- 🔄 Scenario comparison (current vs improved habits)
+- 🧠 Explainable impact breakdown (factor-level)
+- 📈 Primary growth driver analysis
+- 💡 Personalized, prioritized recommendations
+- ⚠️ Input validation and sanity checks
 
 ---
 
 ## 🧠 Core Idea
 
-Traditional academic systems evaluate only past marks and attendance.
+Most academic tools look backward. MirrorMind asks:
 
-This system answers:
+“If a student improves X today, how does that change outcomes in the future?”
 
-> “How will today’s habits affect future academic and career outcomes?”
-
-The project uses:
-
-- Time-lag simulation modeling  
-- Weighted contribution logic  
-- Scenario-based improvement comparison  
-- Explainable factor-level impact analysis  
+It uses lightweight time-lag simulation and weighted-contribution rules to show how habit changes propagate into marks and career readiness.
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Architecture Overview
 
-### 🔹 Backend (Python Package)
+### 🔹 Backend (Python)
 
-Located inside `/backend`
+Found under `/backend`. Key modules:
 
-Modules:
+- `data.py` — student data model and validators
+- `logic.py` — core contribution rules
+- `simulation.py` — progression engine (weekly steps)
+- `career.py` — career-readiness scoring
+- `recommendations.py` — suggestion generator
+- `scenario.py` — current vs improved scenario comparator
+- `service.py` — orchestration and analysis API
+- `app.py` — lightweight test runner
 
-- `data.py` → Student data model  
-- `logic.py` → Academic performance logic  
-- `simulation.py` → Weekly academic progression engine  
-- `career.py` → Career readiness computation  
-- `recommendations.py` → Personalized suggestions  
-- `scenario.py` → Current vs Improved comparison  
-- `service.py` → Unified analysis service layer  
-- `app.py` → Backend test runner  
-
-Main entry function:
+Entry point example:
 
 ```python
 from backend.service import run_full_analysis
+
+# use run_full_analysis(input_dict) to get a full report
 ```
-###🔹 Frontend (Streamlit)
 
-Interactive interface that:
-Accepts habit inputs through sliders
-Runs simulation
-Displays performance results
-Shows scenario comparison
-Presents explainable improvement breakdown
+### 🔹 Frontend (Streamlit)
 
-📊 Key Features
-1️⃣ Academic Progress Simulation
+Simple interactive UI lives in `/frontend` and:`
 
-    Simulates marks progression over multiple weeks using habit-based logic.
+- collects habit inputs via sliders
+- runs the simulation
+- visualizes predictions, scenario diffs, and impact breakdowns
 
-2️⃣ Career Analytics Engine
+Key features
 
-    Computes career score using:
+1) Academic progress simulation — weekly projections driven by habit inputs
 
-        Consistency
-        Skill development
-        Internship effort
+2) Career analytics — scores computed from consistency, skill growth and internship effort
 
-3️⃣ Scenario Comparison
+3) Scenario comparison — side-by-side before/after snapshots and delta summaries
 
-    Compares:
+4) Explainable impact breakdown — per-factor contribution, percent shares, and primary drivers
 
-        Current habits
-        Improved habits
-    Outputs:
+---
 
-        Marks change
-        Career score change
-        Placement probability shift
+## 🛠️ Quick Start
 
-4️⃣ Explainable Impact Breakdown
+1. Clone the repository
 
-    Each improvement shows:
+```bash
+git clone <repo-url>
+cd student-digital-twin
+```
 
-        Before value
-        After value
-        Change
-        Estimated weighted impact
-        Percentage contribution
-        Primary growth driver
+2. Create a virtual environment and install dependencies
 
-### 🛠️ Installation & Setup
-1.Clone Repository
-2.Install dependencies:
-    pip install -r requirements.txt
-3.Run backend(Testing mode):
-    python -m backend.app
-4.Run frontend:
-    streamlit run frontend/app.py
+```bash
+python -m venv .venv
+.\
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+# then
+pip install -r requirements.txt
+```
 
-📦 Tech Stack
+3. Run the backend (test mode)
 
-    Python
-    Streamlit
-    Modular Backend Architecture
-    Scenario-Based Simulation Engine
+```bash
+python -m backend.app
+```
 
-🎯 Future Enhancements
+4. Run the Streamlit frontend
 
-    User authentication system
-    Database integration (PostgreSQL / SQLite)
-    REST API layer using FastAPI
-    Advanced dashboard analytics
-    Habit trend visualization charts
-    Deployment on Streamlit Cloud
-    Multi-user support
+```bash
+streamlit run frontend/app.py
+```
 
-👨‍💻 Contributors
+---
 
-Backend Development: Sushanth S
-Frontend Development: Vishal S Naik
+## 📦 Tech Stack
+
+- Python 3.10+
+- Streamlit (frontend)
+- Modular, testable backend components
+
+---
+
+## 🎯 Roadmap Ideas
+
+- Add authentication and per-user persistence
+- Persist experiments and results to a database (SQLite / PostgreSQL)
+- Expose a REST API with FastAPI
+- Richer visualizations and habit-trend analytics
+- Deploy on Streamlit Cloud or a container platform
+
+---
+
+## 👥 Contributors
+
+- Backend: Sushanth S
+- Frontend: Vishal S Naik
+
+---
 
 ## 🌐 Live Demo
 
-Try the app here: https://mirroredminds.streamlit.app/
+Try the live prototype: https://mirroredminds.streamlit.app/
+
+If you want, I can also: add a short usage example, create badges, or extract a one-page quickstart. Tell me which next step you prefer.
