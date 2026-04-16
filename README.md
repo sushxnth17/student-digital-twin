@@ -1,5 +1,7 @@
 # 📘🧠 MirrorMind — Student Digital Twin
 
+Current status: completed
+
 A compact, explainable simulation that models how a student's daily habits shape long-term academic performance and placement readiness.
 
 This project emphasizes transparent, rule-based reasoning rather than black-box ML — ideal for educators and learners who want actionable, interpretable insights.
