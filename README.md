@@ -148,4 +148,3 @@ streamlit run frontend/app.py
 
 Try the live prototype: https://mirroredminds.streamlit.app/
 
-If you want, I can also: add a short usage example, create badges, or extract a one-page quickstart. Tell me which next step you prefer.
