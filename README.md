@@ -1,16 +1,16 @@
 # 📘🧠 MirrorMind — Student Digital Twin
 
-Current status: completed
+Status: Completed
 
-A compact, explainable simulation that models how a student's daily habits shape long-term academic performance and placement readiness.
+MirrorMind is a compact, explainable simulator that shows how daily habits influence long-term academic outcomes and placement readiness.
 
-This project emphasizes transparent, rule-based reasoning rather than black-box ML — ideal for educators and learners who want actionable, interpretable insights.
+The project prioritizes transparent, rule-based reasoning over black-box ML, making outputs actionable for educators and learners.
 
 ---
 
 ## 🚀 At a Glance
 
-MirrorMind models a student using a small set of behavioral and academic inputs:
+MirrorMind uses a few core behavioral and academic inputs to produce clear, interpretable outcomes:
 
 - Attendance
 - Current marks
@@ -19,7 +19,7 @@ MirrorMind models a student using a small set of behavioral and academic inputs:
 - Skill level
 - Internship effort
 
-From these, it produces:
+Outputs include:
 
 - 📊 Final marks prediction
 - 🎯 Career readiness score
@@ -34,11 +34,9 @@ From these, it produces:
 
 ## 🧠 Core Idea
 
-Most academic tools look backward. MirrorMind asks:
+Instead of explaining what happened, MirrorMind answers: “If a student improves X today, how will outcomes change?”
 
-“If a student improves X today, how does that change outcomes in the future?”
-
-It uses lightweight time-lag simulation and weighted-contribution rules to show how habit changes propagate into marks and career readiness.
+It runs a lightweight time-lag simulation with weighted contribution rules so you can see how habit changes propagate into marks and career readiness.
 
 ---
 
@@ -46,48 +44,45 @@ It uses lightweight time-lag simulation and weighted-contribution rules to show 
 
 ### 🔹 Backend (Python)
 
-Found under `/backend`. Key modules:
+Located in `/backend`. Key modules:
 
-- `data.py` — student data model and validators
-- `logic.py` — core contribution rules
+- `data.py` — student model and validators
+- `logic.py` — contribution rules
 - `simulation.py` — progression engine (weekly steps)
 - `career.py` — career-readiness scoring
 - `recommendations.py` — suggestion generator
-- `scenario.py` — current vs improved scenario comparator
+- `scenario.py` — comparator for current vs improved scenarios
 - `service.py` — orchestration and analysis API
-- `app.py` — lightweight test runner
+- `app.py` — lightweight runner for quick tests
 
-Entry point example:
+Quick example:
 
 ```python
 from backend.service import run_full_analysis
 
-# use run_full_analysis(input_dict) to get a full report
+# run_full_analysis(input_dict) -> full analysis report
 ```
 
 ### 🔹 Frontend (Streamlit)
 
-Simple interactive UI lives in `/frontend` and:`
+The interactive UI is in `/frontend`.
 
-- collects habit inputs via sliders
-- runs the simulation
-- visualizes predictions, scenario diffs, and impact breakdowns
+- Collects habit inputs via sliders
+- Runs simulations on demand
+- Visualizes projections, scenario deltas, and per-factor impacts
 
-Key features
+Key features:
 
-1) Academic progress simulation — weekly projections driven by habit inputs
-
-2) Career analytics — scores computed from consistency, skill growth and internship effort
-
-3) Scenario comparison — side-by-side before/after snapshots and delta summaries
-
-4) Explainable impact breakdown — per-factor contribution, percent shares, and primary drivers
+1. Weekly academic projections driven by habit inputs
+2. Career analytics combining consistency, skill growth, and internship effort
+3. Scenario comparison with clear delta summaries
+4. Explainable impact breakdowns showing percent contribution and primary drivers
 
 ---
 
 ## 🛠️ Quick Start
 
-1. Clone the repository
+1. Clone the repo
 
 ```bash
 git clone <repo-url>
@@ -96,22 +91,24 @@ cd student-digital-twin
 
 2. Create a virtual environment and install dependencies
 
+Cross-platform (Windows PowerShell shown):
+
 ```bash
 python -m venv .venv
-.\
-# Windows PowerShell
+# Activate (PowerShell)
 .\.venv\Scripts\Activate.ps1
-# then
+# On macOS / Linux
+# source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Run the backend (test mode)
+3. Run backend (test mode)
 
 ```bash
 python -m backend.app
 ```
 
-4. Run the Streamlit frontend
+4. Launch the Streamlit UI
 
 ```bash
 streamlit run frontend/app.py
@@ -131,9 +128,9 @@ streamlit run frontend/app.py
 
 - Add authentication and per-user persistence
 - Persist experiments and results to a database (SQLite / PostgreSQL)
-- Expose a REST API with FastAPI
-- Richer visualizations and habit-trend analytics
-- Deploy on Streamlit Cloud or a container platform
+- Expose a REST API (FastAPI)
+- Richer visualizations and trend analytics
+- Deploy to a hosting platform (Streamlit Cloud / Docker)
 
 ---
 
